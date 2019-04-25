@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity
 
         setTitle("آموزش عالی بم");
 
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
