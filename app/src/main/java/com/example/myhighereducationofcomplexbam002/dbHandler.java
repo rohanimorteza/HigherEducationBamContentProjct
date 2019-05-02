@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
+
 public class dbHandler extends SQLiteOpenHelper {
 
     public static String DBNAME="bamuniversity.db";
@@ -16,6 +18,17 @@ public class dbHandler extends SQLiteOpenHelper {
         super(context, "BAM", null, 1);
         cntx = context;
         DBPATH = context.getCacheDir().getPath()+"/"+DBNAME;
+    }
+
+    public boolean DbExist(){
+
+        File f = new File(DBPATH);
+        if(f.exists()){
+            return true;
+
+        }else {
+            return false;
+        }
     }
 
     @Override
