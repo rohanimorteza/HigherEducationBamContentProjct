@@ -3,6 +3,8 @@ package com.example.myhighereducationofcomplexbam002;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,8 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.myhighereducationofcomplexbam002.Adapter.FacultyAdapter;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +36,24 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
+/*
         dbHandler dbh = new dbHandler(this);
         dbh.open();
         Toast.makeText(getApplicationContext(),dbh.get_Name(3),Toast.LENGTH_LONG).show();
         dbh.close();
+*/
+        recyclerView = findViewById(R.id.rec);
+        dbHandler dbh = new dbHandler(this);
+        dbh.open();
+        FacultyAdapter facultyAdapter = new FacultyAdapter(this,dbh.display_faculty());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.setAdapter(facultyAdapter);
+        dbh.close();
+
+
+
+
+
 
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
