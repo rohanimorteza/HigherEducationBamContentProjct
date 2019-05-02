@@ -5,10 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.myhighereducationofcomplexbam002.Model.Faculty;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class dbHandler extends SQLiteOpenHelper {
 
@@ -90,6 +94,25 @@ public class dbHandler extends SQLiteOpenHelper {
        Cursor cursor= db.rawQuery("select * from tbl_faculty where id="+id,null);
        cursor.moveToFirst();
        return cursor.getString(1);
+    }
+
+    public List<Faculty> display_faculty(){
+
+        Cursor cursor= db.rawQuery("select * from tbl_faculty ",null);
+        cursor.moveToFirst();
+        List<Faculty> facultyList = new ArrayList<>();
+
+        do{
+            Faculty faculty = new Faculty();
+            faculty.setId(cursor.getString(0));
+            faculty.setFaculty_name(cursor.getString(1));
+
+            facultyList.add(faculty);
+
+        }while (cursor.moveToNext());
+
+        return facultyList;
+
     }
 
     @Override
