@@ -106,6 +106,7 @@ public class dbHandler extends SQLiteOpenHelper {
             Faculty faculty = new Faculty();
             faculty.setId(cursor.getString(0));
             faculty.setFaculty_name(cursor.getString(1));
+            faculty.setAx(cursor.getBlob(2));
 
             facultyList.add(faculty);
 

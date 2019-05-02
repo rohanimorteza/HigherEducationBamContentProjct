@@ -17,6 +17,7 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_list_ax"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@mipmap/riazi"/>

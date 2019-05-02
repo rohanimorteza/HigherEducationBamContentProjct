@@ -4,6 +4,7 @@ public class Faculty {
 
     private String id;
     private String faculty_name;
+    private byte[] ax;
 
 
     public String getId() {
@@ -20,5 +21,13 @@ public class Faculty {
 
     public void setFaculty_name(String faculty_name) {
         this.faculty_name = faculty_name;
+    }
+
+    public byte[] getAx() {
+        return ax;
+    }
+
+    public void setAx(byte[] ax) {
+        this.ax = ax;
     }
 }
