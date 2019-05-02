@@ -15,6 +15,7 @@ public class dbHandler extends SQLiteOpenHelper {
     public static String DBPATH="";
     public static String TBL="tbl_faculty";
     private Context cntx;
+    SQLiteDatabase db;
 
 
     public dbHandler(Context context) {
@@ -55,6 +56,27 @@ public class dbHandler extends SQLiteOpenHelper {
         }catch (Exception e){
             return false;
         }
+    }
+
+
+    public void open(){
+
+        if(DbExist()){
+
+            try {
+                File f = new File(DBPATH);
+                db = SQLiteDatabase.openDatabase(DBPATH,null,SQLiteDatabase.OPEN_READWRITE);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }else {
+            if(CopyDb()){
+                open();
+            }
+        }
+
     }
 
     @Override
