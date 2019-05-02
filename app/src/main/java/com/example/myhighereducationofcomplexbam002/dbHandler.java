@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 public class dbHandler extends SQLiteOpenHelper {
 
@@ -15,7 +18,7 @@ public class dbHandler extends SQLiteOpenHelper {
 
 
     public dbHandler(Context context) {
-        super(context, "BAM", null, 1);
+        super(context, DBNAME, null, 1);
         cntx = context;
         DBPATH = context.getCacheDir().getPath()+"/"+DBNAME;
     }
@@ -27,6 +30,29 @@ public class dbHandler extends SQLiteOpenHelper {
             return true;
 
         }else {
+            return false;
+        }
+    }
+
+    public boolean CopyDb(){
+        try{
+
+            FileOutputStream out = new FileOutputStream(DBPATH);
+            InputStream in = cntx.getAssets().open(DBNAME);
+
+            byte[] buffer = new byte[1024];
+            int ch;
+
+            while ((ch=in.read(buffer))>0){
+
+                out.write(buffer,0,ch);
+            }
+            out.flush();
+            out.close();
+            in.close();
+            return true;
+
+        }catch (Exception e){
             return false;
         }
     }
