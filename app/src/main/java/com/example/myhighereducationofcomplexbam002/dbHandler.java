@@ -6,10 +6,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class dbHandler extends SQLiteOpenHelper {
 
-    
+    public static String DBNAME="bamuniversity.db";
+    public static String DBPATH="";
+    public static String TBL="tbl_faculty";
+    private Context cntx;
+
 
     public dbHandler(Context context) {
         super(context, "BAM", null, 1);
+        cntx = context;
+        DBPATH = context.getCacheDir().getPath()+"/"+DBNAME;
     }
 
     @Override
