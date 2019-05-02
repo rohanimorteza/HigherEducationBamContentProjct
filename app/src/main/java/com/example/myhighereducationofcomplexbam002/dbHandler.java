@@ -1,6 +1,7 @@
 package com.example.myhighereducationofcomplexbam002;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -84,7 +85,12 @@ public class dbHandler extends SQLiteOpenHelper {
         super.close();
     }
 
-    
+    public String get_Name(int id){
+
+       Cursor cursor= db.rawQuery("select * from tbl_faculty where id="+id,null);
+       cursor.moveToFirst();
+       return cursor.getString(1);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
