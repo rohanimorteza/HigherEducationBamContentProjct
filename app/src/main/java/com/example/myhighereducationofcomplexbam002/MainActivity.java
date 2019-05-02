@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
 
         dbHandler dbh = new dbHandler(this);
         dbh.open();
-        Toast.makeText(getApplicationContext(),dbh.get_Name(4),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),dbh.get_Name(3),Toast.LENGTH_LONG).show();
         dbh.close();
 
 /*
