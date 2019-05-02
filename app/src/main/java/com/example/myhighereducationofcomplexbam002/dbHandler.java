@@ -80,6 +80,13 @@ public class dbHandler extends SQLiteOpenHelper {
     }
 
     @Override
+    public synchronized void close() {
+        super.close();
+    }
+
+    
+
+    @Override
     public void onCreate(SQLiteDatabase db) {
 
     }
