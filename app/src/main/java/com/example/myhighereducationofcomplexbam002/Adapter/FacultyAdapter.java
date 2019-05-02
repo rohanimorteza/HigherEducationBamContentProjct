@@ -3,6 +3,7 @@ package com.example.myhighereducationofcomplexbam002.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,19 +26,25 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.FacultyV
 
     @NonNull
     @Override
-    public FacultyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+    public FacultyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_faculty,parent,false);
+
+        return new FacultyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FacultyViewHolder facultyViewHolder, int i) {
+    public void onBindViewHolder(@NonNull FacultyViewHolder facultyViewHolder, int position) {
 
+        facultyViewHolder.name.setText(facultyList.get(position).getFaculty_name());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return facultyList.size();
     }
+
+
 
     public class FacultyViewHolder extends RecyclerView.ViewHolder {
 
