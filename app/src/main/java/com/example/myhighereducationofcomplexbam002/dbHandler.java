@@ -116,6 +116,22 @@ public class dbHandler extends SQLiteOpenHelper {
 
     }
 
+
+    public Faculty display2(String id){
+
+        Cursor cursor= db.rawQuery("select * from tbl_faculty where id_prof="+id,null);
+        cursor.moveToFirst();
+
+            Faculty faculty = new Faculty();
+            faculty.setId(cursor.getString(0));
+            faculty.setFaculty_name(cursor.getString(1));
+            faculty.setAx(cursor.getBlob(2));
+
+
+        return faculty;
+
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
