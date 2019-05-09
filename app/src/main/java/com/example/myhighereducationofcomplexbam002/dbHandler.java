@@ -119,7 +119,7 @@ public class dbHandler extends SQLiteOpenHelper {
 
     public Faculty display2(String id){
 
-        Cursor cursor= db.rawQuery("select * from tbl_faculty where id_prof="+id,null);
+        Cursor cursor= db.rawQuery("select * from tbl_professor where id_prof="+id,null);
         cursor.moveToFirst();
 
             Faculty faculty = new Faculty();
