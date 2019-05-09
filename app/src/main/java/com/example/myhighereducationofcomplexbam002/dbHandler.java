@@ -127,9 +127,35 @@ public class dbHandler extends SQLiteOpenHelper {
             faculty.setFaculty_name(cursor.getString(1));
             faculty.setAx(cursor.getBlob(2));
 
-
         return faculty;
 
+    }
+
+    public int ProfessorCount(){
+        Cursor cursor= db.rawQuery("select * from tbl_professor ",null);
+        cursor.moveToFirst();
+
+        return cursor.getCount();
+    }
+
+    public int facultyCount(){
+        Cursor cursor= db.rawQuery("select * from tbl_faculty ",null);
+        cursor.moveToFirst();
+
+        return cursor.getCount();
+    }
+    public String get_faculty_name(String id){
+        Cursor cursor= db.rawQuery("select * from tbl_faculty where id="+id,null);
+        cursor.moveToFirst();
+
+        return cursor.getString(1);
+    }
+
+    public String get_Cat_Prof(String id){
+        Cursor cursor= db.rawQuery("select * from tbl_professor where id_prof="+id,null);
+        cursor.moveToFirst();
+
+        return cursor.getString(3);
     }
 
     @Override

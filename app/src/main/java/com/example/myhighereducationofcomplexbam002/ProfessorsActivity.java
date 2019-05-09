@@ -73,6 +73,30 @@ public class ProfessorsActivity extends AppCompatActivity
     public void setupViewPager(ViewPager viewPager){
 
 
+        int facultCount = 0;
+        dbHandler dbh = new dbHandler(this);
+        dbh.open();
+        facultCount=dbh.facultyCount();
+        //Toast.makeText(getApplicationContext(),""+dbh.facultyCount(),Toast.LENGTH_LONG).show();
+
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        ListFragment[] listFragments = new ListFragment[facultCount];
+
+        for(int i=0;i<facultCount;i++){
+
+            Bundle bundle = new Bundle();
+            int m= i+1;
+            bundle.putString("FRG",""+m);
+            listFragments[i] = new ListFragment();
+            listFragments[i].setArguments(bundle);
+            fragmentAdapter.addFragment(listFragments[i],dbh.get_faculty_name(""+m));
+
+        }
+
+
+        dbh.close();
+
+/*
         ListFragment cmp = new ListFragment();
         Bundle bundleCmp = new Bundle();
         bundleCmp.putString("FRG","COMP");
@@ -83,10 +107,9 @@ public class ProfessorsActivity extends AppCompatActivity
         bundleMath.putString("FRG","MATH");
         math.setArguments(bundleMath);
 
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
         fragmentAdapter.addFragment(cmp,"فن آوری اطلاعات");
         fragmentAdapter.addFragment(math,"ریاضی");
-
+*/
         viewPager.setAdapter(fragmentAdapter);
 
     }

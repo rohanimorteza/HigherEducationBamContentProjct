@@ -39,6 +39,16 @@ public class ListFragment extends Fragment {
 
         dbHandler dbh = new dbHandler(getContext());
         dbh.open();
+
+        int facultCount=dbh.ProfessorCount();
+
+        for(int i=0;i<facultCount;i++){
+            int m= i+1;
+            if(getArguments().get("FRG").equals(dbh.get_Cat_Prof(""+m))){
+                items.add(dbh.display2(m+""));     }
+        }
+
+        /*
         if(getArguments().get("FRG").equals("COMP")){
 
             items.add(dbh.display2("1"));
@@ -46,6 +56,9 @@ public class ListFragment extends Fragment {
         if(getArguments().get("FRG").equals("MATH")){
             items.add(dbh.display2("2"));
         }
+        */
+
+
         dbh.close();
 
         FacultyAdapter facultyAdapter = new FacultyAdapter(getContext(),items);
