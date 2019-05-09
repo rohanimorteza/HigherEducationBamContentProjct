@@ -67,6 +67,7 @@ public class ProfessorsActivity extends AppCompatActivity
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+
     }
 
 
@@ -111,6 +112,8 @@ public class ProfessorsActivity extends AppCompatActivity
         fragmentAdapter.addFragment(math,"ریاضی");
 */
         viewPager.setAdapter(fragmentAdapter);
+        viewPager.computeScroll();
+
 
     }
 
