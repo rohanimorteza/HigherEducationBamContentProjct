@@ -1,6 +1,8 @@
 package com.example.myhighereducationofcomplexbam002;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,8 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.myhighereducationofcomplexbam002.Model.Professor;
 
 public class DetailActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,7 +29,8 @@ public class DetailActivity extends AppCompatActivity
 
     Button avg;
     EditText n,nn;
-    TextView avrage;
+    TextView name,faculty;
+    ImageView ax;
     dbHandler dbh ;
 
     @Override
@@ -34,16 +40,38 @@ public class DetailActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("اساتید دانشکده ها");
+
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+        name = findViewById(R.id.txt_prof_name);
+        faculty = findViewById(R.id.txt_faculty_name);
+        ax = findViewById(R.id.img_prof_ax);
+
+
         Bundle b = new Bundle();
         b = getIntent().getExtras();
         String id = b.getString("ID");
-        Toast.makeText(getApplicationContext(),id,Toast.LENGTH_LONG).show();
+
+
+        dbHandler dbh = new dbHandler(this);
+        dbh.open();
+        Professor professor = new Professor();
+        professor= dbh.getProfessorDetail(id);
+        //Toast.makeText(getApplicationContext(),professor.getNameProf()+"\n"+professor.getFacultyProf()+"\n",Toast.LENGTH_LONG).show();
+        dbh.close();
+
+        name.setText(professor.getNameProf());
+        faculty.setText("دانشکده : "+professor.getFacultyProf());
+        byte[] p = professor.getAxProf();
+        Bitmap bm = BitmapFactory.decodeByteArray(p,0,p.length);
+        ax.setImageBitmap(bm);
+
+
 
 /*
         n = findViewById(R.id.edt_num);
         nn = findViewById(R.id.edt_numm);
-        avrage = findViewById(R.id.txt_avg);
-        avg = findViewById(R.id.btn_ave);
         dbh =  new dbHandler(this);
 
         avg.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +106,7 @@ public class DetailActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
     }
 
     @Override
@@ -89,7 +118,7 @@ public class DetailActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -111,7 +140,7 @@ public class DetailActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.myhighereducationofcomplexbam002.Model.Faculty;
+import com.example.myhighereducationofcomplexbam002.Model.Professor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -129,6 +130,24 @@ public class dbHandler extends SQLiteOpenHelper {
             faculty.setAx(cursor.getBlob(2));
 
         return faculty;
+
+    }
+
+    public Professor getProfessorDetail(String id){
+
+        Professor professor = new Professor();
+        Cursor cursor= db.rawQuery("select id_prof , name_prof , ax_prof , name from tbl_professor A " +
+                "INNER JOIN tbl_faculty B " +
+                "ON B.id=A.id_faculty " +
+                "where A.id_prof="+id,null);
+        cursor.moveToFirst();
+
+
+        professor.setIdProf(cursor.getString(0));
+        professor.setNameProf(cursor.getString(1));
+        professor.setAxProf(cursor.getBlob(2));
+        professor.setFacultyProf(cursor.getString(3));
+        return professor;
 
     }
 
