@@ -1,5 +1,6 @@
 package com.example.myhighereducationofcomplexbam002;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -156,6 +157,13 @@ public class dbHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         return cursor.getString(3);
+    }
+
+    public void insert(String av){
+        ContentValues cv = new ContentValues();
+        cv.put("average",av);
+
+        db.insert("tbl_average","average",cv);
     }
 
     @Override

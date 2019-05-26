@@ -1,6 +1,7 @@
 package com.example.myhighereducationofcomplexbam002;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,8 @@ import com.example.myhighereducationofcomplexbam002.Adapter.FacultyAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static String from="1";
 
     RecyclerView recyclerView;
 
@@ -78,6 +81,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        from="1";
+        super.onResume();
+
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -121,11 +131,16 @@ public class MainActivity extends AppCompatActivity
 
             startActivity(new Intent(MainActivity.this,ProfessorsActivity.class));
 
+        }else if (id == R.id.nav_web) {
+
+            String url = "http://www.bam.ac.ir";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+
         }
         /*
-        else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.) {
+        else if (id == R.id.) {
 
         } else if (id == R.id.nav_share) {
 

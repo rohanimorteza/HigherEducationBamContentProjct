@@ -1,10 +1,9 @@
 package com.example.myhighereducationofcomplexbam002;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,37 +13,54 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myhighereducationofcomplexbam002.Fragment.FragmentAdapter;
-import com.example.myhighereducationofcomplexbam002.Fragment.ListFragment;
-
-public class ProfessorsActivity extends AppCompatActivity
+public class DetailActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    String id;
+
+    Button avg;
+    EditText n,nn;
+    TextView avrage;
+    dbHandler dbh ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_professors);
+        setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTitle("اساتید دانشکده ها");
-
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-
-
         Bundle b = new Bundle();
         b = getIntent().getExtras();
-        id = b.getString("IDFACULTY");
+        String id = b.getString("ID");
         Toast.makeText(getApplicationContext(),id,Toast.LENGTH_LONG).show();
 
-        MainActivity.from="2";
-        init();
-
 /*
+        n = findViewById(R.id.edt_num);
+        nn = findViewById(R.id.edt_numm);
+        avrage = findViewById(R.id.txt_avg);
+        avg = findViewById(R.id.btn_ave);
+        dbh =  new dbHandler(this);
+
+        avg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int a=((Integer.parseInt(n.getText().toString()))+(Integer.parseInt(nn.getText().toString())))/2;
+                avrage.setText( ""+a);
+
+                dbh.open();
+                dbh.insert(""+a);
+                dbh.close();
+
+            }
+        });
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,74 +78,6 @@ public class ProfessorsActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
-    }
-
-    @Override
-    protected void onResume() {
-        MainActivity.from="2";
-        super.onResume();
-    }
-
-    public void init(){
-
-        ViewPager viewPager = findViewById(R.id.viewpager);
-
-        if(viewPager !=null){
-            setupViewPager(viewPager);
-        }
-
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-
-    }
-
-    public void setupViewPager(ViewPager viewPager){
-
-
-        int facultCount = 0;
-        dbHandler dbh = new dbHandler(this);
-        dbh.open();
-        facultCount=dbh.facultyCount();
-        //Toast.makeText(getApplicationContext(),""+dbh.facultyCount(),Toast.LENGTH_LONG).show();
-
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
-        ListFragment[] listFragments = new ListFragment[facultCount];
-
-        for(int i=0;i<facultCount;i++){
-
-            Bundle bundle = new Bundle();
-            int m= i+1;
-            bundle.putString("FRG",""+m);
-            listFragments[i] = new ListFragment();
-            listFragments[i].setArguments(bundle);
-            fragmentAdapter.addFragment(listFragments[i],dbh.get_faculty_name(""+m));
-
-        }
-
-
-        dbh.close();
-
-/*
-        ListFragment cmp = new ListFragment();
-        Bundle bundleCmp = new Bundle();
-        bundleCmp.putString("FRG","COMP");
-        cmp.setArguments(bundleCmp);
-
-        ListFragment math = new ListFragment();
-        Bundle bundleMath = new Bundle();
-        bundleMath.putString("FRG","MATH");
-        math.setArguments(bundleMath);
-
-        fragmentAdapter.addFragment(cmp,"فن آوری اطلاعات");
-        fragmentAdapter.addFragment(math,"ریاضی");
-*/
-        viewPager.setAdapter(fragmentAdapter);
-        viewPager.setCurrentItem(Integer.parseInt(id)-1);
-        viewPager.computeScroll();
-
-
     }
 
     @Override
@@ -145,7 +93,7 @@ public class ProfessorsActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.professors, menu);
+        getMenuInflater().inflate(R.menu.detail, menu);
         return true;
     }
 
@@ -157,9 +105,8 @@ public class ProfessorsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_like) {
-            Toast.makeText(getApplicationContext(),"فهرست علاقه مندی ها",Toast.LENGTH_LONG).show();
-            //return true;
+        if (id == R.id.action_settings) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
