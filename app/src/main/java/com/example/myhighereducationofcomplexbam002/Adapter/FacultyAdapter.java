@@ -63,6 +63,11 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.FacultyV
                     i.putExtra("IDFACULTY",facultyList.get(position).getId());
                     context.startActivity(i);
 
+                }else if(from.equals("2")) {
+                    Intent i = new Intent(context, DetailActivity.class);
+                    i.putExtra("ID",facultyList.get(position).getId());
+                    context.startActivity(i);
+
                 }else {
                     Intent i = new Intent(context, DetailActivity.class);
                     i.putExtra("ID",facultyList.get(position).getId());

@@ -118,6 +118,26 @@ public class dbHandler extends SQLiteOpenHelper {
 
     }
 
+    public List<Faculty> display_professor_list(){
+
+        Cursor cursor= db.rawQuery("select * from tbl_professor ",null);
+        cursor.moveToFirst();
+        List<Faculty> professorList = new ArrayList<>();
+
+        do{
+            Faculty professor = new Faculty();
+            professor.setId(cursor.getString(0));
+            professor.setFaculty_name(cursor.getString(1));
+            professor.setAx(cursor.getBlob(2));
+
+            professorList.add(professor);
+
+        }while (cursor.moveToNext());
+
+        return professorList;
+
+    }
+
 
     public Faculty display2(String id){
 
@@ -183,6 +203,28 @@ public class dbHandler extends SQLiteOpenHelper {
         cv.put("average",av);
 
         db.insert("tbl_average","average",cv);
+    }
+
+
+    public boolean isDisplay(String a){
+        Cursor cursor = db.rawQuery("SELECT * FROM tbl_professor where name_prof like '%"+a+"%'",null);
+        cursor.moveToFirst();
+        return cursor.getCount()>0;
+    }
+
+    public List<Faculty> display_search(String a)  {
+        Cursor cursor = db.rawQuery("SELECT * FROM tbl_professor where name_prof like '%"+a+"%'",null);
+        cursor.moveToFirst();
+        List<Faculty> professorList = new ArrayList<>();
+        do{
+            Faculty professor = new Faculty();
+            professor.setId(cursor.getString(0));
+            professor.setFaculty_name(cursor.getString(1));
+            professor.setAx(cursor.getBlob(2));
+
+            professorList.add(professor);
+        }while (cursor.moveToNext());
+        return professorList;
     }
 
     @Override
